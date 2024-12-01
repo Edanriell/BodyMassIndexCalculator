@@ -7,15 +7,12 @@ export default defineNuxtConfig({
 	alias: {
 		"@app": fileURLToPath(new URL("./app", import.meta.url)),
 		"@shared": fileURLToPath(new URL("./shared", import.meta.url)),
-		"@pages": fileURLToPath(new URL("./pages", import.meta.url)),
-		"@routes": fileURLToPath(new URL("./routes", import.meta.url)),
+		"@pages": fileURLToPath(new URL("./nuxt-pages", import.meta.url)),
+		"@nuxt-pages": fileURLToPath(new URL("./nuxt-nuxt-pages", import.meta.url)),
 		"@features": fileURLToPath(new URL("./features", import.meta.url)),
 		"@widgets": fileURLToPath(new URL("./widgets", import.meta.url))
 	},
 	modules: ["@nuxt/eslint"],
-	dir: {
-		pages: "routes"
-	},
 	vite: {
 		css: {
 			preprocessorOptions: {
