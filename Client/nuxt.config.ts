@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 		"@features": fileURLToPath(new URL("./features", import.meta.url)),
 		"@widgets": fileURLToPath(new URL("./widgets", import.meta.url))
 	},
-	modules: ["@nuxt/eslint"],
+	modules: ["@nuxt/image", "@nuxt/eslint"],
 	vite: {
 		css: {
 			preprocessorOptions: {
