@@ -18,14 +18,17 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 32rem 24rem 24rem 24rem;
+		margin: 0 24rem;
+		padding: 32rem 0 24rem 0;
 
 		@media (width >= 768px) {
-			padding: 32rem 41rem 40rem 41rem;
+			margin: 0 41rem;
+			padding: 32rem 0 40rem 0;
 		}
 
 		@media (width >= 1440px) {
-			padding: 75rem 140rem 28rem 140rem;
+			margin: 0 140rem;
+			padding: 75rem 0 127rem 0;
 			justify-content: flex-start;
 		}
 	}
