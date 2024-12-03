@@ -25,8 +25,9 @@
 		border-radius: 0 0 35rem 35rem;
 		height: 640rem;
 		background: linear-gradient(315deg, #d6e6fe 0%, rgba(214, 252, 254, 0) 100%);
+		z-index: -1;
 
-		@media (width > 1440px) {
+		@media (width >= 1440px) {
 			width: 978rem;
 			height: 737rem;
 			left: 24rem;

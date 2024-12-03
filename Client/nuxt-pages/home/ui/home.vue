@@ -1,7 +1,9 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	import { HeroSection } from "./sections/hero/ui";
+</script>
 
 <template>
-	<h1>HomePage</h1>
+	<HeroSection />
 </template>
 
 <style scoped></style>
