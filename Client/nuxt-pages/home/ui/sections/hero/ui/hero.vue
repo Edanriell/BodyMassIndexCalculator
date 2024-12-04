@@ -19,6 +19,7 @@
 <style scoped>
 	.hero-section {
 		margin: 0 24rem;
+		position: relative;
 
 		@media (width >= 768px) {
 			margin: 0 41rem;
@@ -26,11 +27,17 @@
 
 		@media (width >= 1440px) {
 			margin: 0 140rem;
+			padding-top: 127rem;
 		}
 	}
 
 	.hero-section__content-wrapper {
 		position: relative;
+
+		@media (width >= 1440px) {
+			flex: 0 0 564rem;
+			max-width: 564rem;
+		}
 	}
 
 	.hero-section__title {
@@ -50,7 +57,7 @@
 		@media (width >= 1440px) {
 			text-align: left;
 			font-size: 64rem;
-			margin: 0 716rem 35rem 0;
+			margin: 0 120rem 35rem 0;
 		}
 	}
 
@@ -64,7 +71,7 @@
 
 		@media (width >= 1440px) {
 			text-align: left;
-			margin: 0 695rem 0 0;
+			margin: 0 100rem 0 0;
 		}
 	}
 </style>

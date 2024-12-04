@@ -77,6 +77,14 @@
 			margin-top: 40rem;
 			padding: 32rem;
 		}
+
+		@media (width >= 1440px) {
+			margin-top: unset;
+			width: 564rem;
+			position: absolute;
+			top: 43rem;
+			right: 0;
+		}
 	}
 
 	.bmi-calculator__title {
@@ -195,6 +203,7 @@
 		flex-direction: column;
 		row-gap: 8rem;
 		position: relative;
+		width: 100%;
 	}
 
 	.number-input__description {
@@ -213,6 +222,7 @@
 
 	.number-input__input-wrapper {
 		position: relative;
+		width: 100%;
 	}
 
 	.radio-input {
