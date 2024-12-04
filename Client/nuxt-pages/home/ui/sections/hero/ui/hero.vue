@@ -1,13 +1,18 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	import { BmiCalculator } from "@features/bmi-calculator/ui";
+</script>
 
 <template>
 	<section class="hero-section">
-		<h1 class="hero-section__title">Body Mass Index Calculator</h1>
-		<p class="hero-section__text">
-			Better understand your weight in relation to your height using our body mass index (BM)
-			calculator. While BMI is not the sole determinant of a healthy weight, it offers a
-			valuable starting point to evaluate your overall health and well-being.
-		</p>
+		<div class="hero-section__content-wrapper">
+			<h1 class="hero-section__title">Body Mass Index Calculator</h1>
+			<p class="hero-section__text">
+				Better understand your weight in relation to your height using our body mass index
+				(BM) calculator. While BMI is not the sole determinant of a healthy weight, it
+				offers a valuable starting point to evaluate your overall health and well-being.
+			</p>
+		</div>
+		<BmiCalculator />
 	</section>
 </template>
 
@@ -22,6 +27,10 @@
 		@media (width >= 1440px) {
 			margin: 0 140rem;
 		}
+	}
+
+	.hero-section__content-wrapper {
+		position: relative;
 	}
 
 	.hero-section__title {
