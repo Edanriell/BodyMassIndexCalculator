@@ -28,7 +28,7 @@
 
 		@media (width >= 1440px) {
 			margin: 0 140rem;
-			padding: 75rem 0 127rem 0;
+			padding: 75rem 0 0 0;
 			justify-content: flex-start;
 		}
 	}
