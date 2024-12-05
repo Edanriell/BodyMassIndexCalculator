@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	import { ref } from "vue";
+
+	import { Input } from "@shared/ui/input/ui";
+
+	const radioInputValue = ref<string>();
+</script>
 
 <template>
 	<article class="bmi-calculator">
@@ -7,32 +13,24 @@
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Measurement System</legend>
 				<div class="bmi-form__radio-input-group">
-					<label class="radio-input__label">
-						<input
-							id="metric"
-							class="radio-input"
-							name="measurement"
-							type="radio"
-							value="metric"
-						/>
-						<div class="radio-input__radio-mark">
-							<div class="radio-input__radio-mark--type--selected"></div>
-						</div>
-						<span class="radio-input__label-name">Metric</span>
-					</label>
-					<label class="radio-input__label">
-						<input
-							id="imperial"
-							class="radio-input"
-							name="measurement"
-							type="radio"
-							value="imperial"
-						/>
-						<div class="radio-input__radio-mark">
-							<div class="radio-input__radio-mark--type--selected"></div>
-						</div>
-						<span class="radio-input__label-name">Imperial</span>
-					</label>
+					<Input
+						id="metric"
+						v-model="radioInputValue"
+						:selected="radioInputValue === 'metric'"
+						labelName="Metric"
+						name="measurement"
+						type="radio"
+						value="metric"
+					/>
+					<Input
+						id="imperial"
+						v-model="radioInputValue"
+						:selected="radioInputValue === 'imperial'"
+						labelName="Imperial"
+						name="measurement"
+						type="radio"
+						value="imperial"
+					/>
 				</div>
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
@@ -223,54 +221,5 @@
 	.number-input__input-wrapper {
 		position: relative;
 		width: 100%;
-	}
-
-	.radio-input {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-	}
-
-	.radio-input__label {
-		position: relative;
-		display: flex;
-		align-items: center;
-		column-gap: 18rem;
-		cursor: pointer;
-
-		@media (width >= 768px) {
-			width: 100%;
-			column-gap: 18rem;
-		}
-	}
-
-	.radio-input__label-name {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 16rem;
-		line-height: 150%;
-		color: var(--gunmetal);
-	}
-
-	.radio-input__radio-mark {
-		width: 31rem;
-		height: 31rem;
-		border-radius: 50%;
-		background-color: transparent;
-		border: 1rem solid var(--dark-electric-blue);
-		display: inline-block;
-		position: relative;
-	}
-
-	.radio-input__radio-mark--type--selected {
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 15rem;
-		height: 15rem;
-		border-radius: 50%;
-		background: var(--blue);
-		transform: translate(-50%, -50%);
 	}
 </style>
