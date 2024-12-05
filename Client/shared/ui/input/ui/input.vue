@@ -6,16 +6,23 @@
 		id: string;
 		name: string;
 		labelName: string;
+		labelFor?: string;
 		value?: string;
 		selected?: boolean;
+		description?: string;
 	};
 
-	const { type, id, name, labelName, value, selected } = defineProps<InputProps>();
+	const { type, id, name, labelName, labelFor, value, selected, description } =
+		defineProps<InputProps>();
 
 	const model = defineModel();
 
 	const handleRadioInputSelect = () => {
 		model.value = value;
+	};
+
+	const handleNumberInputChange = (event: Event) => {
+		model.value = Number((event.target as HTMLInputElement).value);
 	};
 </script>
 
@@ -46,6 +53,19 @@
 		</div>
 		<span class="radio-input__label-name">{{ labelName }}</span>
 	</label>
+	<div v-else-if="type === 'number'" class="number-input__field">
+		<label :for="labelFor" class="number-input__label">{{ labelName }}</label>
+		<div class="number-input__input-wrapper">
+			<input
+				:id="id"
+				:name="name"
+				class="number-input"
+				type="number"
+				@change="handleNumberInputChange"
+			/>
+			<span class="number-input__description">{{ description }}</span>
+		</div>
+	</div>
 </template>
 
 <style scoped>
@@ -112,5 +132,60 @@
 
 	.radio-input__radio-mark-dot--type--selected {
 		opacity: 1;
+	}
+
+	.number-input {
+		border: 1rem solid var(--dark-electric-blue);
+		border-radius: 12rem;
+		padding: 20rem 24rem;
+		width: 100%;
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 24rem;
+		letter-spacing: -0.05em;
+		color: var(--gunmetal);
+		max-height: 69rem;
+		-moz-appearance: textfield;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+
+	.number-input__label {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 400;
+		font-size: 14rem;
+		line-height: 150%;
+		color: var(--dark-electric-blue);
+	}
+
+	.number-input__field {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8rem;
+		position: relative;
+		width: 100%;
+	}
+
+	.number-input__description {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 24rem;
+		letter-spacing: -0.05em;
+		color: var(--blue);
+		position: absolute;
+		right: 24rem;
+		top: 50%;
+		transform: translateY(-50%);
+		pointer-events: none;
+		user-select: none;
+	}
+
+	.number-input__input-wrapper {
+		position: relative;
+		width: 100%;
 	}
 </style>

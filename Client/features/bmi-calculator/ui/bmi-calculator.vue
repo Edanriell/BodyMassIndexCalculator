@@ -3,7 +3,10 @@
 
 	import { Input } from "@shared/ui/input/ui";
 
-	const radioInputValue = ref<string>();
+	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>(null);
+
+	const heightMetric = ref<number | null>(null);
+	const weightMetric = ref<number | null>(null);
 </script>
 
 <template>
@@ -15,8 +18,8 @@
 				<div class="bmi-form__radio-input-group">
 					<Input
 						id="metric"
-						v-model="radioInputValue"
-						:selected="radioInputValue === 'metric'"
+						v-model="selectedMeasurementSystem"
+						:selected="selectedMeasurementSystem === 'metric'"
 						labelName="Metric"
 						name="measurement"
 						type="radio"
@@ -24,8 +27,8 @@
 					/>
 					<Input
 						id="imperial"
-						v-model="radioInputValue"
-						:selected="radioInputValue === 'imperial'"
+						v-model="selectedMeasurementSystem"
+						:selected="selectedMeasurementSystem === 'imperial'"
 						labelName="Imperial"
 						name="measurement"
 						type="radio"
@@ -36,20 +39,24 @@
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Enter Your Details</legend>
 				<div class="bmi-form__number-input-group">
-					<div class="number-input__field">
-						<label class="number-input__label" for="height">Height</label>
-						<div class="number-input__input-wrapper">
-							<input id="height" class="number-input" name="height" type="number" />
-							<span class="number-input__description">cm</span>
-						</div>
-					</div>
-					<div class="number-input__field">
-						<label class="number-input__label" for="weight">Weight</label>
-						<div class="number-input__input-wrapper">
-							<input id="weight" class="number-input" name="weight" type="number" />
-							<span class="number-input__description">kg</span>
-						</div>
-					</div>
+					<Input
+						id="height"
+						v-model="heightMetric"
+						description="cm"
+						labelFor="height"
+						labelName="Height"
+						name="height"
+						type="number"
+					/>
+					<Input
+						id="weight"
+						v-model="weightMetric"
+						description="kg"
+						labelFor="weight"
+						labelName="Weight"
+						name="weight"
+						type="number"
+					/>
 				</div>
 			</fieldset>
 		</form>
@@ -166,60 +173,5 @@
 		font-size: 14rem;
 		line-height: 150%;
 		color: var(--pure-white);
-	}
-
-	.number-input {
-		border: 1rem solid var(--dark-electric-blue);
-		border-radius: 12rem;
-		padding: 20rem 24rem;
-		width: 100%;
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 24rem;
-		letter-spacing: -0.05em;
-		color: var(--gunmetal);
-		max-height: 69rem;
-		-moz-appearance: textfield;
-
-		&::-webkit-outer-spin-button,
-		&::-webkit-inner-spin-button {
-			-webkit-appearance: none;
-			margin: 0;
-		}
-	}
-
-	.number-input__label {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 400;
-		font-size: 14rem;
-		line-height: 150%;
-		color: var(--dark-electric-blue);
-	}
-
-	.number-input__field {
-		display: flex;
-		flex-direction: column;
-		row-gap: 8rem;
-		position: relative;
-		width: 100%;
-	}
-
-	.number-input__description {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 24rem;
-		letter-spacing: -0.05em;
-		color: var(--blue);
-		position: absolute;
-		right: 24rem;
-		top: 50%;
-		transform: translateY(-50%);
-		pointer-events: none;
-		user-select: none;
-	}
-
-	.number-input__input-wrapper {
-		position: relative;
-		width: 100%;
 	}
 </style>
