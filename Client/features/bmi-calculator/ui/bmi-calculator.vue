@@ -1,4 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	import { ref } from "vue";
+
+	import { Input } from "@shared/ui/input/ui";
+
+	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>(null);
+
+	const heightMetric = ref<number | null>(null);
+	const weightMetric = ref<number | null>(null);
+</script>
 
 <template>
 	<article class="bmi-calculator">
@@ -7,51 +16,49 @@
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Measurement System</legend>
 				<div class="bmi-form__radio-input-group">
-					<label class="radio-input__label">
-						<input
-							id="metric"
-							class="radio-input"
-							name="measurement"
-							type="radio"
-							value="metric"
-						/>
-						<div class="radio-input__radio-mark">
-							<div class="radio-input__radio-mark--type--selected"></div>
-						</div>
-						<span class="radio-input__label-name">Metric</span>
-					</label>
-					<label class="radio-input__label">
-						<input
-							id="imperial"
-							class="radio-input"
-							name="measurement"
-							type="radio"
-							value="imperial"
-						/>
-						<div class="radio-input__radio-mark">
-							<div class="radio-input__radio-mark--type--selected"></div>
-						</div>
-						<span class="radio-input__label-name">Imperial</span>
-					</label>
+					<Input
+						id="metric"
+						v-model="selectedMeasurementSystem"
+						:selected="selectedMeasurementSystem === 'metric'"
+						labelName="Metric"
+						name="measurement"
+						type="radio"
+						value="metric"
+					/>
+					<Input
+						id="imperial"
+						v-model="selectedMeasurementSystem"
+						:selected="selectedMeasurementSystem === 'imperial'"
+						labelName="Imperial"
+						name="measurement"
+						type="radio"
+						value="imperial"
+					/>
 				</div>
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Enter Your Details</legend>
 				<div class="bmi-form__number-input-group">
-					<div class="number-input__field">
-						<label class="number-input__label" for="height">Height</label>
-						<div class="number-input__input-wrapper">
-							<input id="height" class="number-input" name="height" type="number" />
-							<span class="number-input__description">cm</span>
-						</div>
-					</div>
-					<div class="number-input__field">
-						<label class="number-input__label" for="weight">Weight</label>
-						<div class="number-input__input-wrapper">
-							<input id="weight" class="number-input" name="weight" type="number" />
-							<span class="number-input__description">kg</span>
-						</div>
-					</div>
+					<Input
+						id="height"
+						v-model="heightMetric"
+						description="cm"
+						labelFor="height"
+						labelName="Height"
+						name="height"
+						placeholder="0"
+						type="number"
+					/>
+					<Input
+						id="weight"
+						v-model="weightMetric"
+						description="kg"
+						labelFor="weight"
+						labelName="Weight"
+						name="weight"
+						placeholder="0"
+						type="number"
+					/>
 				</div>
 			</fieldset>
 		</form>
@@ -168,109 +175,5 @@
 		font-size: 14rem;
 		line-height: 150%;
 		color: var(--pure-white);
-	}
-
-	.number-input {
-		border: 1rem solid var(--dark-electric-blue);
-		border-radius: 12rem;
-		padding: 20rem 24rem;
-		width: 100%;
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 24rem;
-		letter-spacing: -0.05em;
-		color: var(--gunmetal);
-		max-height: 69rem;
-		-moz-appearance: textfield;
-
-		&::-webkit-outer-spin-button,
-		&::-webkit-inner-spin-button {
-			-webkit-appearance: none;
-			margin: 0;
-		}
-	}
-
-	.number-input__label {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 400;
-		font-size: 14rem;
-		line-height: 150%;
-		color: var(--dark-electric-blue);
-	}
-
-	.number-input__field {
-		display: flex;
-		flex-direction: column;
-		row-gap: 8rem;
-		position: relative;
-		width: 100%;
-	}
-
-	.number-input__description {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 24rem;
-		letter-spacing: -0.05em;
-		color: var(--blue);
-		position: absolute;
-		right: 24rem;
-		top: 50%;
-		transform: translateY(-50%);
-		pointer-events: none;
-		user-select: none;
-	}
-
-	.number-input__input-wrapper {
-		position: relative;
-		width: 100%;
-	}
-
-	.radio-input {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-	}
-
-	.radio-input__label {
-		position: relative;
-		display: flex;
-		align-items: center;
-		column-gap: 18rem;
-		cursor: pointer;
-
-		@media (width >= 768px) {
-			width: 100%;
-			column-gap: 18rem;
-		}
-	}
-
-	.radio-input__label-name {
-		font-family: var(--font-family), sans-serif;
-		font-weight: 600;
-		font-size: 16rem;
-		line-height: 150%;
-		color: var(--gunmetal);
-	}
-
-	.radio-input__radio-mark {
-		width: 31rem;
-		height: 31rem;
-		border-radius: 50%;
-		background-color: transparent;
-		border: 1rem solid var(--dark-electric-blue);
-		display: inline-block;
-		position: relative;
-	}
-
-	.radio-input__radio-mark--type--selected {
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 15rem;
-		height: 15rem;
-		border-radius: 50%;
-		background: var(--blue);
-		transform: translate(-50%, -50%);
 	}
 </style>
