@@ -10,9 +10,10 @@
 		value?: string;
 		selected?: boolean;
 		description?: string;
+		placeholder?: string;
 	};
 
-	const { type, id, name, labelName, labelFor, value, selected, description } =
+	const { type, id, name, labelName, labelFor, value, selected, description, placeholder } =
 		defineProps<InputProps>();
 
 	const model = defineModel();
@@ -59,6 +60,7 @@
 			<input
 				:id="id"
 				:name="name"
+				:placeholder="placeholder"
 				class="number-input"
 				type="number"
 				@change="handleNumberInputChange"
@@ -151,6 +153,15 @@
 		&::-webkit-inner-spin-button {
 			-webkit-appearance: none;
 			margin: 0;
+		}
+
+		&::placeholder {
+			font-family: var(--font-family), sans-serif;
+			font-weight: 600;
+			font-size: 24rem;
+			letter-spacing: -0.05em;
+			color: var(--dark-electric-blue);
+			opacity: 1;
 		}
 	}
 

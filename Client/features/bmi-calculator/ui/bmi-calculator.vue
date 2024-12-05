@@ -46,6 +46,7 @@
 						labelFor="height"
 						labelName="Height"
 						name="height"
+						placeholder="0"
 						type="number"
 					/>
 					<Input
@@ -55,6 +56,7 @@
 						labelFor="weight"
 						labelName="Weight"
 						name="weight"
+						placeholder="0"
 						type="number"
 					/>
 				</div>
