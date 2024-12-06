@@ -1,56 +1,136 @@
 <script lang="ts" setup>
-	import { ref } from "vue";
+	import { computed, onMounted, ref, watch } from "vue";
 
 	import { Input } from "@shared/ui/input/ui";
+
+	import { calculateIdealWeightRange } from "../lib";
+
+	const LOCAL_STORAGE_KEY = "bmiCalculatorData";
 
 	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>("metric");
 
 	const heightMetric = ref<number | null>(null);
 	const weightMetric = ref<number | null>(null);
 
-	const bmi = computed(() => {
-		if (!heightMetric.value || !weightMetric.value) return null;
+	const heightImperialFt = ref<number | null>(null);
+	const heightImperialIn = ref<number | null>(null);
+	const weightImperialSt = ref<number | null>(null);
+	const weightImperialLbs = ref<number | null>(null);
 
-		// BMI formula for metric system: weight (kg) / (height (m) ^ 2)
-		const heightInMeters = heightMetric.value / 100;
-		return (weightMetric.value / (heightInMeters * heightInMeters)).toFixed(1);
+	onMounted(() => {
+		const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+		if (savedData) {
+			const parsedData = JSON.parse(savedData);
+
+			selectedMeasurementSystem.value = parsedData.selectedMeasurementSystem ?? "metric";
+
+			heightMetric.value = parsedData.heightMetric ?? null;
+			weightMetric.value = parsedData.weightMetric ?? null;
+
+			heightImperialFt.value = parsedData.heightImperialFt ?? null;
+			heightImperialIn.value = parsedData.heightImperialIn ?? null;
+			weightImperialSt.value = parsedData.weightImperialSt ?? null;
+			weightImperialLbs.value = parsedData.weightImperialLbs ?? null;
+		}
+	});
+
+	watch(
+		[
+			selectedMeasurementSystem,
+			heightMetric,
+			weightMetric,
+			heightImperialFt,
+			heightImperialIn,
+			weightImperialSt,
+			weightImperialLbs
+		],
+		() => {
+			const dataToSave = {
+				selectedMeasurementSystem: selectedMeasurementSystem.value,
+				heightMetric: heightMetric.value,
+				weightMetric: weightMetric.value,
+				heightImperialFt: heightImperialFt.value,
+				heightImperialIn: heightImperialIn.value,
+				weightImperialSt: weightImperialSt.value,
+				weightImperialLbs: weightImperialLbs.value
+			};
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+		},
+		{ deep: true }
+	);
+
+	const bmi = computed(() => {
+		if (selectedMeasurementSystem.value === "metric") {
+			if (!heightMetric.value || !weightMetric.value) return null;
+			const heightInMeters = heightMetric.value / 100;
+			return (weightMetric.value / (heightInMeters * heightInMeters)).toFixed(1);
+		} else if (selectedMeasurementSystem.value === "imperial") {
+			const totalHeightInInches =
+				(heightImperialFt.value || 0) * 12 + (heightImperialIn.value || 0);
+			const totalWeightInLbs =
+				(weightImperialSt.value || 0) * 14 + (weightImperialLbs.value || 0);
+			if (!totalHeightInInches || !totalWeightInLbs) return null;
+			return ((totalWeightInLbs * 703) / (totalHeightInInches * totalHeightInInches)).toFixed(
+				1
+			);
+		}
+		return null;
 	});
 
 	const resultDescription = computed(() => {
 		if (!bmi.value) return null;
 
 		const bmiValue = parseFloat(bmi.value);
-
 		if (bmiValue < 18.5) {
 			return {
 				text: "Your BMI suggests you’re underweight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else if (bmiValue >= 18.5 && bmiValue < 25) {
 			return {
 				text: "Your BMI suggests you’re a healthy weight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else if (bmiValue >= 25 && bmiValue < 30) {
 			return {
 				text: "Your BMI suggests you’re overweight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else {
 			return {
 				text: "Your BMI suggests you’re obese. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		}
 	});
-
-	function calculateIdealWeightRange(minBmi: number, maxBmi: number) {
-		if (!heightMetric.value) return null;
-		const heightInMeters = heightMetric.value / 100;
-		const minWeight = (minBmi * heightInMeters * heightInMeters).toFixed(1);
-		const maxWeight = (maxBmi * heightInMeters * heightInMeters).toFixed(1);
-		return `${minWeight}kgs - ${maxWeight}kgs.`;
-	}
 </script>
 
 <template>
@@ -82,7 +162,10 @@
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Enter Your Details</legend>
-				<div class="bmi-form__number-input-group">
+				<div
+					v-if="selectedMeasurementSystem === 'metric'"
+					class="bmi-form__number-input-group bmi-form__number-input-group--type--metric"
+				>
 					<Input
 						id="height"
 						v-model="heightMetric"
@@ -103,6 +186,57 @@
 						placeholder="0"
 						type="number"
 					/>
+				</div>
+				<div
+					v-else-if="selectedMeasurementSystem === 'imperial'"
+					class="bmi-form__number-input-group bmi-form__number-input-group--type--imperial"
+				>
+					<div class="bmi-form__number-input-subgroup">
+						<Input
+							id="height"
+							v-model="heightImperialFt"
+							description="ft"
+							labelFor="height"
+							labelName="Height"
+							name="height"
+							placeholder="0"
+							type="number"
+						/>
+						<Input
+							id="height"
+							v-model="heightImperialIn"
+							:labelHidden="true"
+							description="in"
+							labelFor="height"
+							labelName="Height"
+							name="height"
+							placeholder="0"
+							type="number"
+						/>
+					</div>
+					<div class="bmi-form__number-input-subgroup">
+						<Input
+							id="weight"
+							v-model="weightImperialSt"
+							description="st"
+							labelFor="weight"
+							labelName="Weight"
+							name="weight"
+							placeholder="0"
+							type="number"
+						/>
+						<Input
+							id="weight"
+							v-model="weightImperialLbs"
+							:labelHidden="true"
+							description="lbs"
+							labelFor="weight"
+							labelName="Weight"
+							name="weight"
+							placeholder="0"
+							type="number"
+						/>
+					</div>
 				</div>
 			</fieldset>
 		</form>
@@ -204,12 +338,34 @@
 
 	.bmi-form__number-input-group {
 		display: flex;
+	}
+
+	.bmi-form__number-input-subgroup {
+		display: flex;
+		flex-direction: row;
+		column-gap: 16rem;
+
+		@media (width >= 768px) {
+			column-gap: 24rem;
+		}
+	}
+
+	.bmi-form__number-input-group--type--metric {
 		flex-direction: column;
 		row-gap: 16rem;
 
 		@media (width >= 768px) {
 			flex-direction: row;
 			column-gap: 24rem;
+		}
+	}
+
+	.bmi-form__number-input-group--type--imperial {
+		flex-direction: column;
+		row-gap: 16rem;
+
+		@media (width >= 768px) {
+			row-gap: 24rem;
 		}
 	}
 
