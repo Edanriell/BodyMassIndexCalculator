@@ -8,6 +8,11 @@
 	const heightMetric = ref<number | null>(null);
 	const weightMetric = ref<number | null>(null);
 
+	const heightImperialFt = ref<number | null>(null);
+	const heightImperialIn = ref<number | null>(null);
+	const weightImperialSt = ref<number | null>(null);
+	const weightImperialLbs = ref<number | null>(null);
+
 	const bmi = computed(() => {
 		if (!heightMetric.value || !weightMetric.value) return null;
 
@@ -82,7 +87,10 @@
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Enter Your Details</legend>
-				<div class="bmi-form__number-input-group">
+				<div
+					v-if="selectedMeasurementSystem === 'metric'"
+					class="bmi-form__number-input-group bmi-form__number-input-group--type--metric"
+				>
 					<Input
 						id="height"
 						v-model="heightMetric"
@@ -103,6 +111,57 @@
 						placeholder="0"
 						type="number"
 					/>
+				</div>
+				<div
+					v-else-if="selectedMeasurementSystem === 'imperial'"
+					class="bmi-form__number-input-group bmi-form__number-input-group--type--imperial"
+				>
+					<div class="bmi-form__number-input-subgroup">
+						<Input
+							id="height"
+							v-model="heightImperialFt"
+							description="ft"
+							labelFor="height"
+							labelName="Height"
+							name="height"
+							placeholder="0"
+							type="number"
+						/>
+						<Input
+							id="height"
+							v-model="heightImperialIn"
+							:labelHidden="true"
+							description="in"
+							labelFor="height"
+							labelName="Height"
+							name="height"
+							placeholder="0"
+							type="number"
+						/>
+					</div>
+					<div class="bmi-form__number-input-subgroup">
+						<Input
+							id="weight"
+							v-model="weightImperialSt"
+							description="st"
+							labelFor="weight"
+							labelName="Weight"
+							name="weight"
+							placeholder="0"
+							type="number"
+						/>
+						<Input
+							id="weight"
+							v-model="weightImperialLbs"
+							:labelHidden="true"
+							description="lbs"
+							labelFor="weight"
+							labelName="Weight"
+							name="weight"
+							placeholder="0"
+							type="number"
+						/>
+					</div>
 				</div>
 			</fieldset>
 		</form>
@@ -204,12 +263,34 @@
 
 	.bmi-form__number-input-group {
 		display: flex;
+	}
+
+	.bmi-form__number-input-subgroup {
+		display: flex;
+		flex-direction: row;
+		column-gap: 16rem;
+
+		@media (width >= 768px) {
+			column-gap: 24rem;
+		}
+	}
+
+	.bmi-form__number-input-group--type--metric {
 		flex-direction: column;
 		row-gap: 16rem;
 
 		@media (width >= 768px) {
 			flex-direction: row;
 			column-gap: 24rem;
+		}
+	}
+
+	.bmi-form__number-input-group--type--imperial {
+		flex-direction: column;
+		row-gap: 16rem;
+
+		@media (width >= 768px) {
+			row-gap: 24rem;
 		}
 	}
 

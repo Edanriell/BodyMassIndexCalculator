@@ -6,6 +6,7 @@
 		id: string;
 		name: string;
 		labelName: string;
+		labelHidden?: boolean;
 		labelFor?: string;
 		value?: string;
 		selected?: boolean;
@@ -13,8 +14,18 @@
 		placeholder?: string;
 	};
 
-	const { type, id, name, labelName, labelFor, value, selected, description, placeholder } =
-		defineProps<InputProps>();
+	const {
+		type,
+		id,
+		name,
+		labelName,
+		labelFor,
+		value,
+		selected,
+		description,
+		placeholder,
+		labelHidden
+	} = defineProps<InputProps>();
 
 	const model = defineModel();
 
@@ -55,7 +66,14 @@
 		<span class="radio-input__label-name">{{ labelName }}</span>
 	</label>
 	<div v-else-if="type === 'number'" class="number-input__field">
-		<label :for="labelFor" class="number-input__label">{{ labelName }}</label>
+		<label
+			:class="{
+				'number-input__label': true,
+				'number-input__label--type--hidden': labelHidden
+			}"
+			:for="labelFor"
+			>{{ labelName }}</label
+		>
 		<div class="number-input__input-wrapper">
 			<input
 				:id="id"
@@ -171,6 +189,10 @@
 		font-size: 14rem;
 		line-height: 150%;
 		color: var(--dark-electric-blue);
+	}
+
+	.number-input__label--type--hidden {
+		visibility: hidden;
 	}
 
 	.number-input__field {
