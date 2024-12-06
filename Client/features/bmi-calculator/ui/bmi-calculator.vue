@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 	import { computed, onMounted, ref, watch } from "vue";
+
 	import { Input } from "@shared/ui/input/ui";
+
+	import { calculateIdealWeightRange } from "../lib";
 
 	const LOCAL_STORAGE_KEY = "bmiCalculatorData";
 
@@ -14,15 +17,16 @@
 	const weightImperialSt = ref<number | null>(null);
 	const weightImperialLbs = ref<number | null>(null);
 
-	// Retrieve data from localStorage on mount
 	onMounted(() => {
 		const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
 		if (savedData) {
 			const parsedData = JSON.parse(savedData);
-			console.log(parsedData.heightMetric);
+
 			selectedMeasurementSystem.value = parsedData.selectedMeasurementSystem ?? "metric";
+
 			heightMetric.value = parsedData.heightMetric ?? null;
 			weightMetric.value = parsedData.weightMetric ?? null;
+
 			heightImperialFt.value = parsedData.heightImperialFt ?? null;
 			heightImperialIn.value = parsedData.heightImperialIn ?? null;
 			weightImperialSt.value = parsedData.weightImperialSt ?? null;
@@ -30,7 +34,6 @@
 		}
 	});
 
-	// Save data to localStorage whenever any relevant value changes
 	watch(
 		[
 			selectedMeasurementSystem,
@@ -81,51 +84,53 @@
 		if (bmiValue < 18.5) {
 			return {
 				text: "Your BMI suggests you’re underweight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else if (bmiValue >= 18.5 && bmiValue < 25) {
 			return {
 				text: "Your BMI suggests you’re a healthy weight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else if (bmiValue >= 25 && bmiValue < 30) {
 			return {
 				text: "Your BMI suggests you’re overweight. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		} else {
 			return {
 				text: "Your BMI suggests you’re obese. Your ideal weight is between",
-				range: calculateIdealWeightRange(18.5, 24.9)
+				range: calculateIdealWeightRange({
+					minBmi: 18.5,
+					maxBmi: 24.9,
+					selectedMeasurementSystem: selectedMeasurementSystem.value,
+					heightMetric: heightMetric.value,
+					heightImperialFt: heightImperialFt.value,
+					heightImperialIn: heightImperialIn.value
+				})
 			};
 		}
 	});
-
-	function calculateIdealWeightRange(minBmi: number, maxBmi: number) {
-		if (selectedMeasurementSystem.value === "metric") {
-			if (!heightMetric.value) return null;
-			const heightInMeters = heightMetric.value / 100;
-			const minWeight = (minBmi * heightInMeters * heightInMeters).toFixed(1);
-			const maxWeight = (maxBmi * heightInMeters * heightInMeters).toFixed(1);
-			return `${minWeight}kgs - ${maxWeight}kgs.`;
-		} else if (selectedMeasurementSystem.value === "imperial") {
-			const totalHeightInInches =
-				(heightImperialFt.value || 0) * 12 + (heightImperialIn.value || 0);
-			if (!totalHeightInInches) return null;
-
-			const minWeightLbs = Math.ceil((minBmi * totalHeightInInches ** 2) / 703);
-			const maxWeightLbs = Math.floor((maxBmi * totalHeightInInches ** 2) / 703);
-
-			const convertToStLbs = (lbs: number) => {
-				const stones = Math.floor(lbs / 14);
-				const pounds = lbs % 14;
-				return `${stones}st ${pounds}lbs`;
-			};
-
-			return `${convertToStLbs(minWeightLbs)} - ${convertToStLbs(maxWeightLbs)}.`;
-		}
-		return null;
-	}
 </script>
 
 <template>
