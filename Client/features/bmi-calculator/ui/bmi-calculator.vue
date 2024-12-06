@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-	import { ref } from "vue";
-
+	import { computed, onMounted, ref, watch } from "vue";
 	import { Input } from "@shared/ui/input/ui";
+
+	const LOCAL_STORAGE_KEY = "bmiCalculatorData";
 
 	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>("metric");
 
@@ -12,6 +13,48 @@
 	const heightImperialIn = ref<number | null>(null);
 	const weightImperialSt = ref<number | null>(null);
 	const weightImperialLbs = ref<number | null>(null);
+
+	// Retrieve data from localStorage on mount
+	onMounted(() => {
+		const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+		if (savedData) {
+			const parsedData = JSON.parse(savedData);
+			console.log(parsedData.heightMetric);
+			selectedMeasurementSystem.value = parsedData.selectedMeasurementSystem ?? "metric";
+			heightMetric.value = parsedData.heightMetric ?? null;
+			weightMetric.value = parsedData.weightMetric ?? null;
+			heightImperialFt.value = parsedData.heightImperialFt ?? null;
+			heightImperialIn.value = parsedData.heightImperialIn ?? null;
+			weightImperialSt.value = parsedData.weightImperialSt ?? null;
+			weightImperialLbs.value = parsedData.weightImperialLbs ?? null;
+		}
+	});
+
+	// Save data to localStorage whenever any relevant value changes
+	watch(
+		[
+			selectedMeasurementSystem,
+			heightMetric,
+			weightMetric,
+			heightImperialFt,
+			heightImperialIn,
+			weightImperialSt,
+			weightImperialLbs
+		],
+		() => {
+			const dataToSave = {
+				selectedMeasurementSystem: selectedMeasurementSystem.value,
+				heightMetric: heightMetric.value,
+				weightMetric: weightMetric.value,
+				heightImperialFt: heightImperialFt.value,
+				heightImperialIn: heightImperialIn.value,
+				weightImperialSt: weightImperialSt.value,
+				weightImperialLbs: weightImperialLbs.value
+			};
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+		},
+		{ deep: true }
+	);
 
 	const bmi = computed(() => {
 		if (selectedMeasurementSystem.value === "metric") {

@@ -27,7 +27,7 @@
 		labelHidden
 	} = defineProps<InputProps>();
 
-	const model = defineModel();
+	const model = defineModel<string | number | null>();
 
 	const handleRadioInputSelect = () => {
 		model.value = value;
@@ -79,6 +79,7 @@
 				:id="id"
 				:name="name"
 				:placeholder="placeholder"
+				:value="model?.valueOf()"
 				class="number-input"
 				type="number"
 				@change="handleNumberInputChange"
