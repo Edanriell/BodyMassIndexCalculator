@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 	import { HeroSection } from "./sections/hero/ui";
-	import { AboutResult } from "./sections/about-result/ui";
+	import { AboutResultSection } from "./sections/about-result/ui";
 </script>
 
 <template>
 	<HeroSection />
-	<AboutResult />
+	<AboutResultSection />
 </template>
 
 <style scoped></style>
