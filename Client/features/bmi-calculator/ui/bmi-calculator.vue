@@ -14,18 +14,27 @@
 	const weightImperialLbs = ref<number | null>(null);
 
 	const bmi = computed(() => {
-		if (!heightMetric.value || !weightMetric.value) return null;
-
-		// BMI formula for metric system: weight (kg) / (height (m) ^ 2)
-		const heightInMeters = heightMetric.value / 100;
-		return (weightMetric.value / (heightInMeters * heightInMeters)).toFixed(1);
+		if (selectedMeasurementSystem.value === "metric") {
+			if (!heightMetric.value || !weightMetric.value) return null;
+			const heightInMeters = heightMetric.value / 100;
+			return (weightMetric.value / (heightInMeters * heightInMeters)).toFixed(1);
+		} else if (selectedMeasurementSystem.value === "imperial") {
+			const totalHeightInInches =
+				(heightImperialFt.value || 0) * 12 + (heightImperialIn.value || 0);
+			const totalWeightInLbs =
+				(weightImperialSt.value || 0) * 14 + (weightImperialLbs.value || 0);
+			if (!totalHeightInInches || !totalWeightInLbs) return null;
+			return ((totalWeightInLbs * 703) / (totalHeightInInches * totalHeightInInches)).toFixed(
+				1
+			);
+		}
+		return null;
 	});
 
 	const resultDescription = computed(() => {
 		if (!bmi.value) return null;
 
 		const bmiValue = parseFloat(bmi.value);
-
 		if (bmiValue < 18.5) {
 			return {
 				text: "Your BMI suggests you’re underweight. Your ideal weight is between",
@@ -50,11 +59,29 @@
 	});
 
 	function calculateIdealWeightRange(minBmi: number, maxBmi: number) {
-		if (!heightMetric.value) return null;
-		const heightInMeters = heightMetric.value / 100;
-		const minWeight = (minBmi * heightInMeters * heightInMeters).toFixed(1);
-		const maxWeight = (maxBmi * heightInMeters * heightInMeters).toFixed(1);
-		return `${minWeight}kgs - ${maxWeight}kgs.`;
+		if (selectedMeasurementSystem.value === "metric") {
+			if (!heightMetric.value) return null;
+			const heightInMeters = heightMetric.value / 100;
+			const minWeight = (minBmi * heightInMeters * heightInMeters).toFixed(1);
+			const maxWeight = (maxBmi * heightInMeters * heightInMeters).toFixed(1);
+			return `${minWeight}kgs - ${maxWeight}kgs.`;
+		} else if (selectedMeasurementSystem.value === "imperial") {
+			const totalHeightInInches =
+				(heightImperialFt.value || 0) * 12 + (heightImperialIn.value || 0);
+			if (!totalHeightInInches) return null;
+
+			const minWeightLbs = Math.ceil((minBmi * totalHeightInInches ** 2) / 703);
+			const maxWeightLbs = Math.floor((maxBmi * totalHeightInInches ** 2) / 703);
+
+			const convertToStLbs = (lbs: number) => {
+				const stones = Math.floor(lbs / 14);
+				const pounds = lbs % 14;
+				return `${stones}st ${pounds}lbs`;
+			};
+
+			return `${convertToStLbs(minWeightLbs)} - ${convertToStLbs(maxWeightLbs)}.`;
+		}
+		return null;
 	}
 </script>
 
