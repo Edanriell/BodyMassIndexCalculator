@@ -3,10 +3,54 @@
 
 	import { Input } from "@shared/ui/input/ui";
 
-	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>(null);
+	const selectedMeasurementSystem = ref<"metric" | "imperial" | null>("metric");
 
 	const heightMetric = ref<number | null>(null);
 	const weightMetric = ref<number | null>(null);
+
+	const bmi = computed(() => {
+		if (!heightMetric.value || !weightMetric.value) return null;
+
+		// BMI formula for metric system: weight (kg) / (height (m) ^ 2)
+		const heightInMeters = heightMetric.value / 100;
+		return (weightMetric.value / (heightInMeters * heightInMeters)).toFixed(1);
+	});
+
+	const resultDescription = computed(() => {
+		if (!bmi.value) return null;
+
+		const bmiValue = parseFloat(bmi.value);
+
+		if (bmiValue < 18.5) {
+			return {
+				text: "Your BMI suggests you’re underweight. Your ideal weight is between",
+				range: calculateIdealWeightRange(18.5, 24.9)
+			};
+		} else if (bmiValue >= 18.5 && bmiValue < 25) {
+			return {
+				text: "Your BMI suggests you’re a healthy weight. Your ideal weight is between",
+				range: calculateIdealWeightRange(18.5, 24.9)
+			};
+		} else if (bmiValue >= 25 && bmiValue < 30) {
+			return {
+				text: "Your BMI suggests you’re overweight. Your ideal weight is between",
+				range: calculateIdealWeightRange(18.5, 24.9)
+			};
+		} else {
+			return {
+				text: "Your BMI suggests you’re obese. Your ideal weight is between",
+				range: calculateIdealWeightRange(18.5, 24.9)
+			};
+		}
+	});
+
+	function calculateIdealWeightRange(minBmi: number, maxBmi: number) {
+		if (!heightMetric.value) return null;
+		const heightInMeters = heightMetric.value / 100;
+		const minWeight = (minBmi * heightInMeters * heightInMeters).toFixed(1);
+		const maxWeight = (maxBmi * heightInMeters * heightInMeters).toFixed(1);
+		return `${minWeight}kgs - ${maxWeight}kgs.`;
+	}
 </script>
 
 <template>
@@ -63,10 +107,32 @@
 			</fieldset>
 		</form>
 		<div class="bmi-calculator__result">
-			<strong class="bmi-calculator__result-title">Welcome!</strong>
-			<p class="bmi-calculator__result-text">
-				Enter your height and weight and you’ll see your BMI result here
-			</p>
+			<div
+				v-if="bmi"
+				class="bmi-calculator__result-content bmi-calculator__result-content--type--result"
+			>
+				<div class="bmi-calculator__result-column">
+					<strong class="bmi-calculator__result-value">
+						Your BMI is...
+						<span>{{ bmi }}</span>
+					</strong>
+				</div>
+				<div class="bmi-calculator__result-description-column">
+					<p class="bmi-calculator__result-description-text">
+						{{ resultDescription?.text }}
+						<strong>{{ resultDescription?.range }}</strong>
+					</p>
+				</div>
+			</div>
+			<div
+				v-else
+				class="bmi-calculator__result-content bmi-calculator__result-content--type--no-result"
+			>
+				<strong class="bmi-calculator__result-title">Welcome!</strong>
+				<p class="bmi-calculator__result-text">
+					Enter your height and weight and you’ll see your BMI result here
+				</p>
+			</div>
 		</div>
 	</article>
 </template>
@@ -159,13 +225,33 @@
 		}
 	}
 
+	.bmi-calculator__result-content {
+		display: flex;
+	}
+
+	.bmi-calculator__result-content--type--no-result {
+		flex-direction: column;
+		row-gap: 16rem;
+	}
+
+	.bmi-calculator__result-content--type--result {
+		flex-direction: column;
+		row-gap: 24rem;
+
+		@media (width >= 768px) {
+			flex-direction: row;
+			row-gap: unset;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+
 	.bmi-calculator__result-title {
 		font-family: var(--font-family), sans-serif;
 		font-weight: 600;
 		font-size: 24rem;
 		letter-spacing: -0.05em;
 		color: var(--pure-white);
-		margin-bottom: 16rem;
 		display: block;
 	}
 
@@ -175,5 +261,57 @@
 		font-size: 14rem;
 		line-height: 150%;
 		color: var(--pure-white);
+	}
+
+	.bmi-calculator__result-column {
+		position: relative;
+	}
+
+	.bmi-calculator__result-description-column {
+		position: relative;
+	}
+
+	.bmi-calculator__result-value {
+		display: flex;
+		flex-direction: column;
+		row-gap: 8rem;
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 16rem;
+		line-height: 150%;
+		color: var(--pure-white);
+
+		> span {
+			font-family: var(--font-family), sans-serif;
+			font-weight: 600;
+			font-size: 48rem;
+			line-height: 110%;
+			letter-spacing: -0.05em;
+			color: var(--pure-white);
+
+			@media (width >= 1440px) {
+				font-size: 64rem;
+			}
+		}
+	}
+
+	.bmi-calculator__result-description-text {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 300;
+		font-size: 14rem;
+		line-height: 150%;
+		color: var(--pure-white);
+
+		> strong {
+			font-weight: 700;
+		}
+
+		@media (width >= 768px) {
+			max-width: 267rem;
+		}
+
+		@media (width >= 1440px) {
+			max-width: 206rem;
+		}
 	}
 </style>
