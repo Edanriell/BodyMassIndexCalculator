@@ -13,6 +13,13 @@
 			</p>
 		</div>
 		<BmiCalculator />
+		<NuxtImg
+			class="hero-section__line-image"
+			height="auto"
+			preload
+			src="/images/vector/line.svg"
+			width="auto"
+		/>
 	</section>
 </template>
 
@@ -72,6 +79,19 @@
 		@media (width >= 1440px) {
 			text-align: left;
 			margin: 0 100rem 0 0;
+		}
+	}
+
+	.hero-section__line-image {
+		display: none;
+		position: absolute;
+		bottom: -414rem;
+		right: 27rem;
+		width: 87rem;
+		height: 202rem;
+
+		@media (width >= 1440px) {
+			display: block;
 		}
 	}
 </style>
