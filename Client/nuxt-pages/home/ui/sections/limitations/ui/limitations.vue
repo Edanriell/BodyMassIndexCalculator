@@ -73,6 +73,10 @@
 	.limitations-section {
 		position: relative;
 		margin: 0 24rem 96rem 24rem;
+
+		@media (width >= 768px) {
+			margin: 0 41rem 96rem 41rem;
+		}
 	}
 
 	.limitations-section__content {
@@ -108,6 +112,15 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 16rem;
+
+		@media (width >= 768px) {
+			flex-direction: row;
+			column-gap: 16rem;
+			row-gap: 24rem;
+			flex-wrap: wrap;
+			align-items: stretch;
+			justify-content: center;
+		}
 	}
 
 	.limits-list__item {
@@ -118,6 +131,11 @@
 		display: flex;
 		flex-direction: column;
 		row-gap: 16rem;
+
+		@media (width >= 768px) {
+			padding: 32rem;
+			width: clamp(326rem, 42.4vw, 335rem);
+		}
 	}
 
 	.limits-list__header {
