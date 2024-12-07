@@ -1,3 +1,3 @@
-import { default as Limitations } from "./limitations.vue";
+import { default as LimitationsSection } from "./limitations.vue";
 
-export { Limitations };
+export { LimitationsSection };
