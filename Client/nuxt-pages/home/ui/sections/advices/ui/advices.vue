@@ -75,6 +75,13 @@
 		@media (width >= 768px) {
 			margin-bottom: 96rem;
 		}
+
+		@media (width >= 1440px) {
+			border-radius: 35rem;
+			width: 100%;
+			max-width: 1392rem;
+			margin: 0 auto 120rem auto;
+		}
 	}
 
 	.advices-section__advices-list {
@@ -85,12 +92,26 @@
 			padding-top: 60rem;
 			padding-bottom: 60rem;
 		}
+
+		@media (width >= 1440px) {
+			padding-top: 72rem;
+			padding-bottom: 96rem;
+		}
 	}
 
 	.advices-list {
 		display: flex;
 		flex-direction: column;
 		row-gap: 40rem;
+
+		@media (width >= 1440px) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			column-gap: 32rem;
+			align-items: center;
+			justify-content: center;
+			margin: 0 116rem;
+		}
 	}
 
 	.advices-list__item {
@@ -105,6 +126,16 @@
 			flex-direction: row;
 			align-items: center;
 			column-gap: 40rem;
+		}
+
+		@media (width >= 1440px) {
+			flex-direction: column;
+			row-gap: 45rem;
+			column-gap: unset;
+			max-width: 365rem;
+			margin: unset;
+			flex: 0 0 auto;
+			align-items: flex-start;
 		}
 	}
 
