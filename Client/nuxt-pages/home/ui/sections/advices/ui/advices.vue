@@ -64,47 +64,90 @@
 
 <style scoped>
 	.advices-section {
+		position: relative;
+		background: linear-gradient(
+			315deg,
+			rgba(214, 230, 254, 0.25) 0%,
+			rgba(214, 252, 254, 0) 100%
+		);
+		margin-bottom: 72rem;
 	}
 
 	.advices-section__advices-list {
+		padding-top: 56rem;
+		padding-bottom: 56rem;
 	}
 
 	.advices-list {
+		display: flex;
+		flex-direction: column;
+		row-gap: 40rem;
 	}
 
 	.advices-list__item {
+		display: flex;
+		flex-direction: column;
+		row-gap: 32rem;
+		margin: 0 24rem;
 	}
 
 	.advices-list__icon-wrapper {
+		width: 64rem;
+		height: 64rem;
+		border-radius: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.advices-list__icon-wrapper--color--cherry {
+		background-color: rgba(242, 30, 132, 0.15);
 	}
 
 	.advices-list__icon-wrapper--color--orange {
+		background-color: rgba(246, 145, 52, 0.15);
 	}
 
 	.advices-list__icon-wrapper--color--coral {
+		background-color: rgb(34, 193, 193, 0.15);
 	}
 
 	.advices-list__item-content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 24rem;
 	}
 
 	.advices-list__title {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 24rem;
+		letter-spacing: -0.05em;
+		color: var(--gunmetal);
 	}
 
 	.advices-list__text {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 400;
+		font-size: 16rem;
+		line-height: 150%;
+		color: var(--dark-electric-blue);
 	}
 
 	.icon {
+		width: 33rem;
+		height: 32rem;
 	}
 
 	.icon--type--bowl-food {
+		color: #f21e84;
 	}
 
 	.icon--type--barbell {
+		color: #f69134;
 	}
 
 	.icon--type--moon-stars {
+		color: #22c1c1;
 	}
 </style>
