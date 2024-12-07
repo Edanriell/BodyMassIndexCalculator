@@ -71,11 +71,20 @@
 			rgba(214, 252, 254, 0) 100%
 		);
 		margin-bottom: 72rem;
+
+		@media (width >= 768px) {
+			margin-bottom: 96rem;
+		}
 	}
 
 	.advices-section__advices-list {
 		padding-top: 56rem;
 		padding-bottom: 56rem;
+
+		@media (width >= 768px) {
+			padding-top: 60rem;
+			padding-bottom: 60rem;
+		}
 	}
 
 	.advices-list {
@@ -89,6 +98,14 @@
 		flex-direction: column;
 		row-gap: 32rem;
 		margin: 0 24rem;
+
+		@media (width >= 768px) {
+			margin: 0 41rem;
+			row-gap: unset;
+			flex-direction: row;
+			align-items: center;
+			column-gap: 40rem;
+		}
 	}
 
 	.advices-list__icon-wrapper {
@@ -98,6 +115,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		@media (width >= 768px) {
+			flex: 0 0 auto;
+		}
 	}
 
 	.advices-list__icon-wrapper--color--cherry {
