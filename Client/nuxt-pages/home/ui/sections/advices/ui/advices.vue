@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+	import { Icon } from "@shared/ui/icon/ui";
+</script>
 
 <template>
 	<section class="advices-section">
@@ -6,13 +8,7 @@
 		<ul class="advices-section__advices-list advices-list">
 			<li class="advices-list__item">
 				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--cherry">
-					<NuxtImg
-						class="icon icon--type--bowl-food"
-						height="auto"
-						preload
-						src="/images/vector/icons/bowl-food-light.svg"
-						width="auto"
-					/>
+					<Icon type="bowl-food" />
 				</div>
 				<div class="advices-list__item-content">
 					<h3 class="advices-list__title">Healthy eating</h3>
@@ -24,13 +20,7 @@
 			</li>
 			<li class="advices-list__item">
 				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--orange">
-					<NuxtImg
-						class="icon icon--type--barbell"
-						height="auto"
-						preload
-						src="/images/vector/icons/barbell-light.svg"
-						width="auto"
-					/>
+					<Icon type="barbell" />
 				</div>
 				<div class="advices-list__item-content">
 					<h3 class="advices-list__title">Regular exercise</h3>
@@ -42,13 +32,7 @@
 			</li>
 			<li class="advices-list__item">
 				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--coral">
-					<NuxtImg
-						class="icon icon--type--moon-stars"
-						height="auto"
-						preload
-						src="/images/vector/icons/moon-stars-light.svg"
-						width="auto"
-					/>
+					<Icon type="moon-stars" />
 				</div>
 				<div class="advices-list__item-content">
 					<h3 class="advices-list__title">Adequate sleep</h3>
@@ -184,22 +168,5 @@
 		font-size: 16rem;
 		line-height: 150%;
 		color: var(--dark-electric-blue);
-	}
-
-	.icon {
-		width: 33rem;
-		height: 32rem;
-	}
-
-	.icon--type--bowl-food {
-		color: #f21e84;
-	}
-
-	.icon--type--barbell {
-		color: #f69134;
-	}
-
-	.icon--type--moon-stars {
-		color: #22c1c1;
 	}
 </style>
