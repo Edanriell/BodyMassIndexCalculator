@@ -7,7 +7,7 @@
 			| "barbell"
 			| "moon-stars"
 			| "gender-intersex"
-			| "cake-light"
+			| "cake"
 			| "flexed-biceps"
 			| "baby"
 			| "person";
@@ -50,8 +50,8 @@
 		width="auto"
 	/>
 	<NuxtImg
-		v-if="type === 'cake-light'"
-		class="icon icon--type--cake-light"
+		v-if="type === 'cake'"
+		class="icon icon--type--cake"
 		height="auto"
 		preload
 		src="/images/vector/icons/cake-light.svg"
@@ -105,7 +105,7 @@
 		color: #f24e1e;
 	}
 
-	.icon--type--cake-light {
+	.icon--type--cake {
 		color: #22c1c1;
 	}
 
