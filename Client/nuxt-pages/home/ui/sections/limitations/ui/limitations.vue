@@ -71,32 +71,76 @@
 
 <style scoped>
 	.limitations-section {
+		position: relative;
+		margin: 0 24rem 96rem 24rem;
 	}
 
 	.limitations-section__content {
+		display: flex;
+		flex-direction: column;
+		row-gap: 32rem;
 	}
 
 	.limitations-section__title {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 32rem;
+		line-height: 110%;
+		letter-spacing: -0.05em;
+		text-align: center;
+		color: var(--gunmetal);
 	}
 
 	.limitations-section__text {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 400;
+		font-size: 16rem;
+		line-height: 150%;
+		text-align: center;
+		color: var(--dark-electric-blue);
 	}
 
 	.limitations-sections__limits-list {
+		margin-top: 56rem;
 	}
 
 	.limits-list {
+		display: flex;
+		flex-direction: column;
+		row-gap: 16rem;
 	}
 
 	.limits-list__item {
+		border-radius: 16rem;
+		padding: 24rem;
+		box-shadow: 16rem 32rem 56rem 0 rgba(143, 174, 207, 0.25);
+		background: var(--pure-white);
+		display: flex;
+		flex-direction: column;
+		row-gap: 16rem;
 	}
 
 	.limits-list__header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		column-gap: 16rem;
 	}
 
 	.limits-list__title {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 600;
+		font-size: 20rem;
+		letter-spacing: -0.05em;
+		color: var(--gunmetal);
 	}
 
 	.limits-list__text {
+		font-family: var(--font-family), sans-serif;
+		font-weight: 400;
+		font-size: 16rem;
+		line-height: 150%;
+		color: var(--dark-electric-blue);
 	}
 </style>
