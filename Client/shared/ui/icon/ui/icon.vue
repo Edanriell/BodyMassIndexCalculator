@@ -1,16 +1,10 @@
 <script lang="ts" setup>
 	import { defineProps } from "vue";
 
+	import { type IconTypes } from "./types";
+
 	type IconProps = {
-		type:
-			| "bowl-food"
-			| "barbell"
-			| "moon-stars"
-			| "gender-intersex"
-			| "cake"
-			| "flexed-biceps"
-			| "baby"
-			| "person";
+		type: IconTypes;
 	};
 
 	const { type } = defineProps<IconProps>();

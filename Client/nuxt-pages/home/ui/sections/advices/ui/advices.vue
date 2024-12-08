@@ -1,44 +1,51 @@
 <script lang="ts" setup>
-	import { Icon } from "@shared/ui/icon/ui";
+	import { Icon, type IconTypes } from "@shared/ui/icon/ui";
+
+	type Advice = {
+		iconType: IconTypes;
+		iconColor: string;
+		title: string;
+		text: string;
+	};
+
+	const advices: Array<Advice> = [
+		{
+			iconType: "bowl-food",
+			iconColor: "cherry",
+			title: "Healthy eating",
+			text: "Healthy eating promotes weight control, disease prevention, better digestion, immunity, mental clarity, and mood."
+		},
+		{
+			iconType: "barbell",
+			iconColor: "orange",
+			title: "Regular exercise",
+			text: "Exercise improves fitness, aids weight control, elevates mood, and reduces disease risk, fostering wellness and longevity."
+		},
+		{
+			iconType: "moon-stars",
+			iconColor: "coral",
+			title: "Adequate sleep",
+			text: "Sleep enhances mental clarity, emotional stability, and physical wellness, promoting overall restoration and rejuvenation."
+		}
+	];
 </script>
 
 <template>
 	<section class="advices-section">
 		<h2 class="visually-hidden">Advices to improve bmi</h2>
 		<ul class="advices-section__advices-list advices-list">
-			<li class="advices-list__item">
-				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--cherry">
-					<Icon type="bowl-food" />
+			<li v-for="{ iconType, title, text, iconColor } in advices" class="advices-list__item">
+				<div
+					:class="
+						'advices-list__icon-wrapper advices-list__icon-wrapper--color--' + iconColor
+					"
+				>
+					<Icon :type="iconType" />
 				</div>
 				<div class="advices-list__item-content">
-					<h3 class="advices-list__title">Healthy eating</h3>
+					<h3 class="advices-list__title">{{ title }}</h3>
 					<p class="advices-list__text">
-						Healthy eating promotes weight control, disease prevention, better
-						digestion, immunity, mental clarity, and mood.
-					</p>
-				</div>
-			</li>
-			<li class="advices-list__item">
-				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--orange">
-					<Icon type="barbell" />
-				</div>
-				<div class="advices-list__item-content">
-					<h3 class="advices-list__title">Regular exercise</h3>
-					<p class="advices-list__text">
-						Exercise improves fitness, aids weight control, elevates mood, and reduces
-						disease risk, fostering wellness and longevity.
-					</p>
-				</div>
-			</li>
-			<li class="advices-list__item">
-				<div class="advices-list__icon-wrapper advices-list__icon-wrapper--color--coral">
-					<Icon type="moon-stars" />
-				</div>
-				<div class="advices-list__item-content">
-					<h3 class="advices-list__title">Adequate sleep</h3>
-					<p class="advices-list__text">
-						Sleep enhances mental clarity, emotional stability, and physical wellness,
-						promoting overall restoration and rejuvenation.
+						{{ text }}
 					</p>
 				</div>
 			</li>
