@@ -2,7 +2,15 @@
 	import { defineProps } from "vue";
 
 	type IconProps = {
-		type: "bowl-food" | "barbell" | "moon-stars";
+		type:
+			| "bowl-food"
+			| "barbell"
+			| "moon-stars"
+			| "gender-intersex"
+			| "cake"
+			| "flexed-biceps"
+			| "baby"
+			| "person";
 	};
 
 	const { type } = defineProps<IconProps>();
@@ -33,6 +41,46 @@
 		src="/images/vector/icons/moon-stars-light.svg"
 		width="auto"
 	/>
+	<NuxtImg
+		v-if="type === 'gender-intersex'"
+		class="icon icon--type--gender-intersex"
+		height="auto"
+		preload
+		src="/images/vector/icons/gender-intersex-light.svg"
+		width="auto"
+	/>
+	<NuxtImg
+		v-if="type === 'cake'"
+		class="icon icon--type--cake"
+		height="auto"
+		preload
+		src="/images/vector/icons/cake-light.svg"
+		width="auto"
+	/>
+	<NuxtImg
+		v-if="type === 'flexed-biceps'"
+		class="icon icon--type--flexed-biceps"
+		height="auto"
+		preload
+		src="/images/vector/icons/flexed-biceps-light.svg"
+		width="auto"
+	/>
+	<NuxtImg
+		v-if="type === 'baby'"
+		class="icon icon--type--baby"
+		height="auto"
+		preload
+		src="/images/vector/icons/baby-light.svg"
+		width="auto"
+	/>
+	<NuxtImg
+		v-if="type === 'person'"
+		class="icon icon--type--person"
+		height="auto"
+		preload
+		src="/images/vector/icons/person-light.svg"
+		width="auto"
+	/>
 </template>
 
 <style scoped>
@@ -51,5 +99,25 @@
 
 	.icon--type--moon-stars {
 		color: #22c1c1;
+	}
+
+	.icon--type--gender-intersex {
+		color: #f24e1e;
+	}
+
+	.icon--type--cake {
+		color: #22c1c1;
+	}
+
+	.icon--type--flexed-biceps {
+		color: #9747ff;
+	}
+
+	.icon--type--baby {
+		color: #ffc700;
+	}
+
+	.icon--type--person {
+		color: #f21e84;
 	}
 </style>
