@@ -3,7 +3,7 @@
 
 	type Advice = {
 		iconType: IconTypes;
-		iconColor: string;
+		iconWrapperColor: string;
 		title: string;
 		text: string;
 	};
@@ -11,19 +11,19 @@
 	const advices: Array<Advice> = [
 		{
 			iconType: "bowl-food",
-			iconColor: "cherry",
+			iconWrapperColor: "cherry",
 			title: "Healthy eating",
 			text: "Healthy eating promotes weight control, disease prevention, better digestion, immunity, mental clarity, and mood."
 		},
 		{
 			iconType: "barbell",
-			iconColor: "orange",
+			iconWrapperColor: "orange",
 			title: "Regular exercise",
 			text: "Exercise improves fitness, aids weight control, elevates mood, and reduces disease risk, fostering wellness and longevity."
 		},
 		{
 			iconType: "moon-stars",
-			iconColor: "coral",
+			iconWrapperColor: "coral",
 			title: "Adequate sleep",
 			text: "Sleep enhances mental clarity, emotional stability, and physical wellness, promoting overall restoration and rejuvenation."
 		}
@@ -34,10 +34,14 @@
 	<section class="advices-section">
 		<h2 class="visually-hidden">Advices to improve bmi</h2>
 		<ul class="advices-section__advices-list advices-list">
-			<li v-for="{ iconType, title, text, iconColor } in advices" class="advices-list__item">
+			<li
+				v-for="{ iconType, title, text, iconWrapperColor } in advices"
+				class="advices-list__item"
+			>
 				<div
 					:class="
-						'advices-list__icon-wrapper advices-list__icon-wrapper--color--' + iconColor
+						'advices-list__icon-wrapper advices-list__icon-wrapper--color--' +
+						iconWrapperColor
 					"
 				>
 					<Icon :type="iconType" />
