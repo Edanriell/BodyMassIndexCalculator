@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-	import { defineModel } from "vue";
+	import { defineModel, ref } from "vue";
+	import { animate } from "motion";
 
 	type InputProps = {
 		type: "number" | "radio";
@@ -29,12 +30,34 @@
 
 	const model = defineModel<string | number | null>();
 
+	const numberInputElement = ref<HTMLInputElement | null>(null);
+
 	const handleRadioInputSelect = () => {
 		model.value = value;
 	};
 
 	const handleNumberInputChange = (event: Event) => {
 		model.value = Number((event.target as HTMLInputElement).value);
+	};
+
+	const animateBorder = (element: HTMLElement | null, color: string) => {
+		animate(element!, { borderColor: color }, { type: "spring", duration: 0.25, bounce: 0 });
+	};
+
+	const handleMouseEnter = (element: HTMLElement | null) => {
+		animateBorder(element, "#345ff6");
+	};
+
+	const handleMouseLeave = (element: HTMLElement | null) => {
+		animateBorder(element, "#5e6e85");
+	};
+
+	const handleTouchStart = (element: HTMLElement | null) => {
+		animateBorder(element, "#345ff6");
+	};
+
+	const handleTouchEnd = (element: HTMLElement | null) => {
+		animateBorder(element, "#5e6e85");
 	};
 </script>
 
@@ -77,12 +100,17 @@
 		<div class="number-input__input-wrapper">
 			<input
 				:id="id"
+				ref="numberInputElement"
 				:name="name"
 				:placeholder="placeholder"
 				:value="model?.valueOf()"
 				class="number-input"
 				type="number"
 				@change="handleNumberInputChange"
+				@mouseenter="handleMouseEnter(numberInputElement)"
+				@mouseleave="handleMouseLeave(numberInputElement)"
+				@touchend="handleTouchEnd(numberInputElement)"
+				@touchstart="handleTouchStart(numberInputElement)"
 			/>
 			<span class="number-input__description">{{ description }}</span>
 		</div>
