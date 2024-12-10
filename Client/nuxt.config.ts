@@ -13,6 +13,9 @@ export default defineNuxtConfig({
 		"@widgets": fileURLToPath(new URL("./widgets", import.meta.url))
 	},
 	modules: ["@nuxt/image", "@nuxt/eslint"],
+	dir: {
+		layouts: "./widgets/layouts"
+	},
 	vite: {
 		css: {
 			preprocessorOptions: {
