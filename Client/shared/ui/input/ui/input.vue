@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { defineModel, ref } from "vue";
+	import { defineModel, ref, watch } from "vue";
 	import { animate } from "motion";
 
 	type InputProps = {
@@ -31,6 +31,37 @@
 	const model = defineModel<string | number | null>();
 
 	const numberInputElement = ref<HTMLInputElement | null>(null);
+	const radioMarkElement = ref<HTMLDivElement | null>(null);
+	const radioMarkDotElement = ref<HTMLDivElement | null>(null);
+
+	const animateBorder = (element: HTMLElement | null, color: string) => {
+		animate(element!, { borderColor: color }, { type: "spring", duration: 0.25, bounce: 0 });
+	};
+
+	const animateRadioMark = (selected: boolean) => {
+		animate(
+			radioMarkElement.value!,
+			{
+				backgroundColor: selected
+					? ["rgb(255,255,255)", "rgba(52, 95, 246, 0.15)"]
+					: ["rgba(52, 95, 246, 0.15)", "rgb(255,255,255)"]
+			},
+			{ type: "spring", duration: 0.25, bounce: 0 }
+		);
+	};
+
+	const animateRadioMarkDot = (selected: boolean) => {
+		animate(
+			radioMarkDotElement.value!,
+			{
+				opacity: selected ? 1 : 0,
+				transform: selected
+					? ["translate(-50%, -50%) scale(0)", "translate(-50%, -50%) scale(1)"]
+					: ["translate(-50%, -50%) scale(1)", "translate(-50%, -50%) scale(0)"]
+			},
+			{ type: "spring", duration: 0.25, bounce: 0 }
+		);
+	};
 
 	const handleRadioInputSelect = () => {
 		model.value = value;
@@ -38,10 +69,6 @@
 
 	const handleNumberInputChange = (event: Event) => {
 		model.value = Number((event.target as HTMLInputElement).value);
-	};
-
-	const animateBorder = (element: HTMLElement | null, color: string) => {
-		animate(element!, { borderColor: color }, { type: "spring", duration: 0.25, bounce: 0 });
 	};
 
 	const handleMouseEnter = (element: HTMLElement | null) => {
@@ -59,10 +86,25 @@
 	const handleTouchEnd = (element: HTMLElement | null) => {
 		animateBorder(element, "#5e6e85");
 	};
+
+	watch(
+		() => selected,
+		(value) => {
+			animateRadioMark(value);
+			animateRadioMarkDot(value);
+		}
+	);
 </script>
 
 <template>
-	<label v-if="type === 'radio'" class="radio-input__label">
+	<label
+		v-if="type === 'radio'"
+		class="radio-input__label"
+		@mouseenter="handleMouseEnter(radioMarkElement)"
+		@mouseleave="handleMouseLeave(radioMarkElement)"
+		@touchend="handleTouchEnd(radioMarkElement)"
+		@touchstart="handleTouchStart(radioMarkElement)"
+	>
 		<input
 			:id="id"
 			:name="name"
@@ -72,6 +114,7 @@
 			@input="handleRadioInputSelect"
 		/>
 		<div
+			ref="radioMarkElement"
 			:class="{
 				'radio-input__radio-mark': true,
 				'radio-input__radio-mark--type--unselected': !selected,
@@ -79,6 +122,7 @@
 			}"
 		>
 			<div
+				ref="radioMarkDotElement"
 				:class="{
 					'radio-input__radio-mark-dot': true,
 					'radio-input__radio-mark-dot--type--unselected': !selected,
@@ -151,6 +195,7 @@
 		border-radius: 50%;
 		position: relative;
 		display: inline-block;
+		border: 1rem solid var(--dark-electric-blue);
 	}
 
 	.radio-input__radio-mark--type--unselected {
