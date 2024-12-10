@@ -324,6 +324,7 @@
 			position: absolute;
 			top: 43rem;
 			right: 0;
+			z-index: 3;
 		}
 	}
 

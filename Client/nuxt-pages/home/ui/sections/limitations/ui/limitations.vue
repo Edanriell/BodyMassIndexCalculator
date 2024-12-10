@@ -11,12 +11,12 @@
 		{
 			iconType: "gender-intersex",
 			title: "Gender",
-			text: "Although BMI is often a practical indicator of healthy weight, it is not suited for every person. Specific groups should carefully consider their BMI outcomes, and in certain cases, the measurement may not be beneficial to use."
+			text: "The development and body fat composition of girls and boys vary with age. Consequently, a child's age and gender are considered when evaluating their BMI."
 		},
 		{
 			iconType: "cake",
 			title: "Age",
-			text: "The development and body fat composition of girls and boys vary with age. Consequently, a child's age and gender are considered when evaluating their BMI."
+			text: "In aging individuals, increased body fat and muscle loss may cause BMI to underestimate body fat content."
 		},
 		{
 			iconType: "flexed-biceps",
@@ -45,6 +45,13 @@
 				every person. Specific groups should carefully consider their BMI outcomes, and in
 				certain cases, the measurement may not be beneficial to use.
 			</p>
+			<NuxtImg
+				class="limitations-section__content-decorative-image"
+				height="auto"
+				preload
+				src="/images/vector/line-reversed.svg"
+				width="auto"
+			/>
 		</div>
 		<ul class="limitations-sections__limits-list limits-list">
 			<li v-for="{ iconType, title, text } in limitations" class="limits-list__item">
@@ -86,6 +93,19 @@
 			position: absolute;
 			top: 0;
 			left: 0;
+		}
+	}
+
+	.limitations-section__content-decorative-image {
+		display: none;
+
+		@media (width >= 1440px) {
+			display: block;
+			width: 94rem;
+			height: 122rem;
+			position: absolute;
+			top: 251rem;
+			left: 165rem;
 		}
 	}
 
