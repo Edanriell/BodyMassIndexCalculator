@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import { computed, onMounted, ref, watch } from "vue";
+	import { animate } from "motion";
 
 	import { Input } from "@shared/ui/input/ui";
 
@@ -131,6 +132,30 @@
 			};
 		}
 	});
+
+	const beforeDisplayInputGroup = (element: Element) => {
+		animate(
+			element,
+			{ scale: [0.85], filter: ["blur(4px)", "blur(0px)"] },
+			{ type: "spring", duration: 0, bounce: 0 }
+		);
+	};
+
+	const displayInputGroup = (element: Element, done: () => void) => {
+		animate(
+			element,
+			{ opacity: [0, 1], scale: [0.9, 1], filter: ["blur(4px)", "blur(0px)"] },
+			{ type: "spring", duration: 0.5, bounce: 0 }
+		).then(() => done());
+	};
+
+	const hideInputGroup = (element: Element, done: () => void) => {
+		animate(
+			element,
+			{ opacity: [1, 0], scale: [1, 0.9], filter: ["blur(0px)", "blur(4px)"] },
+			{ type: "spring", duration: 0.5, bounce: 0 }
+		).then(() => done());
+	};
 </script>
 
 <template>
@@ -162,40 +187,21 @@
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Enter Your Details</legend>
-				<div
-					v-if="selectedMeasurementSystem === 'metric'"
-					class="bmi-form__number-input-group bmi-form__number-input-group--type--metric"
+				<Transition
+					:css="false"
+					mode="out-in"
+					@beforeEnter="(el) => beforeDisplayInputGroup(el)"
+					@enter="(el, done) => displayInputGroup(el, done)"
+					@leave="(el, done) => hideInputGroup(el, done)"
 				>
-					<Input
-						id="height"
-						v-model="heightMetric"
-						description="cm"
-						labelFor="height"
-						labelName="Height"
-						name="height"
-						placeholder="0"
-						type="number"
-					/>
-					<Input
-						id="weight"
-						v-model="weightMetric"
-						description="kg"
-						labelFor="weight"
-						labelName="Weight"
-						name="weight"
-						placeholder="0"
-						type="number"
-					/>
-				</div>
-				<div
-					v-else-if="selectedMeasurementSystem === 'imperial'"
-					class="bmi-form__number-input-group bmi-form__number-input-group--type--imperial"
-				>
-					<div class="bmi-form__number-input-subgroup">
+					<div
+						v-if="selectedMeasurementSystem === 'metric'"
+						class="bmi-form__number-input-group bmi-form__number-input-group--type--metric"
+					>
 						<Input
 							id="height"
-							v-model="heightImperialFt"
-							description="ft"
+							v-model="heightMetric"
+							description="cm"
 							labelFor="height"
 							labelName="Height"
 							name="height"
@@ -203,33 +209,9 @@
 							type="number"
 						/>
 						<Input
-							id="height"
-							v-model="heightImperialIn"
-							:labelHidden="true"
-							description="in"
-							labelFor="height"
-							labelName="Height"
-							name="height"
-							placeholder="0"
-							type="number"
-						/>
-					</div>
-					<div class="bmi-form__number-input-subgroup">
-						<Input
 							id="weight"
-							v-model="weightImperialSt"
-							description="st"
-							labelFor="weight"
-							labelName="Weight"
-							name="weight"
-							placeholder="0"
-							type="number"
-						/>
-						<Input
-							id="weight"
-							v-model="weightImperialLbs"
-							:labelHidden="true"
-							description="lbs"
+							v-model="weightMetric"
+							description="kg"
 							labelFor="weight"
 							labelName="Weight"
 							name="weight"
@@ -237,7 +219,58 @@
 							type="number"
 						/>
 					</div>
-				</div>
+					<div
+						v-else-if="selectedMeasurementSystem === 'imperial'"
+						class="bmi-form__number-input-group bmi-form__number-input-group--type--imperial"
+					>
+						<div class="bmi-form__number-input-subgroup">
+							<Input
+								id="height"
+								v-model="heightImperialFt"
+								description="ft"
+								labelFor="height"
+								labelName="Height"
+								name="height"
+								placeholder="0"
+								type="number"
+							/>
+							<Input
+								id="height"
+								v-model="heightImperialIn"
+								:labelHidden="true"
+								description="in"
+								labelFor="height"
+								labelName="Height"
+								name="height"
+								placeholder="0"
+								type="number"
+							/>
+						</div>
+						<div class="bmi-form__number-input-subgroup">
+							<Input
+								id="weight"
+								v-model="weightImperialSt"
+								description="st"
+								labelFor="weight"
+								labelName="Weight"
+								name="weight"
+								placeholder="0"
+								type="number"
+							/>
+							<Input
+								id="weight"
+								v-model="weightImperialLbs"
+								:labelHidden="true"
+								description="lbs"
+								labelFor="weight"
+								labelName="Weight"
+								name="weight"
+								placeholder="0"
+								type="number"
+							/>
+						</div>
+					</div>
+				</Transition>
 			</fieldset>
 		</form>
 		<div class="bmi-calculator__result">
