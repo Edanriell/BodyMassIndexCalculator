@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { defineModel, ref } from "vue";
+	import { defineModel, ref, watch } from "vue";
 	import { animate } from "motion";
 
 	type InputProps = {
@@ -38,6 +38,31 @@
 		animate(element!, { borderColor: color }, { type: "spring", duration: 0.25, bounce: 0 });
 	};
 
+	const animateRadioMark = (selected: boolean) => {
+		animate(
+			radioMarkElement.value!,
+			{
+				backgroundColor: selected
+					? ["rgb(255,255,255)", "rgba(52, 95, 246, 0.15)"]
+					: ["rgba(52, 95, 246, 0.15)", "rgb(255,255,255)"]
+			},
+			{ type: "spring", duration: 0.25, bounce: 0 }
+		);
+	};
+
+	const animateRadioMarkDot = (selected: boolean) => {
+		animate(
+			radioMarkDotElement.value!,
+			{
+				opacity: selected ? 1 : 0,
+				transform: selected
+					? ["translate(-50%, -50%) scale(0)", "translate(-50%, -50%) scale(1)"]
+					: ["translate(-50%, -50%) scale(1)", "translate(-50%, -50%) scale(0)"]
+			},
+			{ type: "spring", duration: 0.25, bounce: 0 }
+		);
+	};
+
 	const handleRadioInputSelect = () => {
 		model.value = value;
 	};
@@ -61,6 +86,14 @@
 	const handleTouchEnd = (element: HTMLElement | null) => {
 		animateBorder(element, "#5e6e85");
 	};
+
+	watch(
+		() => selected,
+		(value) => {
+			animateRadioMark(value);
+			animateRadioMarkDot(value);
+		}
+	);
 </script>
 
 <template>
@@ -162,6 +195,7 @@
 		border-radius: 50%;
 		position: relative;
 		display: inline-block;
+		border: 1rem solid var(--dark-electric-blue);
 	}
 
 	.radio-input__radio-mark--type--unselected {
