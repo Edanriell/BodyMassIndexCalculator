@@ -14,7 +14,7 @@
 
 <style scoped>
 	.not-found-section {
-		min-height: 100vh;
+		min-height: 70vh;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

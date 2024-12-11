@@ -89,6 +89,8 @@
 		right: 27rem;
 		width: 87rem;
 		height: 202rem;
+		user-select: none;
+		pointer-events: none;
 
 		@media (width >= 1440px) {
 			display: block;

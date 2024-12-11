@@ -98,6 +98,8 @@
 
 	.limitations-section__content-decorative-image {
 		display: none;
+		user-select: none;
+		pointer-events: none;
 
 		@media (width >= 1440px) {
 			display: block;
