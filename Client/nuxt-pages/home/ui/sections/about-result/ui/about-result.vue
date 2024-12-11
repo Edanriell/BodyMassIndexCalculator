@@ -88,6 +88,8 @@
 		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%);
+		user-select: none;
+		pointer-events: none;
 
 		@media (width >= 768px) {
 			width: 360rem;
