@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { HomePage } from "~/nuxt-pages/home/ui";
+	import { HomePage } from "@nuxt-pages/home/ui";
 
 	useSeoMeta({
 		title: "Body Mass Index Calculator",
