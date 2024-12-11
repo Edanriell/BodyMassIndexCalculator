@@ -165,24 +165,26 @@
 			<fieldset class="bmi-form__fieldset">
 				<legend class="visually-hidden">Measurement System</legend>
 				<div class="bmi-form__radio-input-group">
-					<Input
-						id="metric"
-						v-model="selectedMeasurementSystem"
-						:selected="selectedMeasurementSystem === 'metric'"
-						labelName="Metric"
-						name="measurement"
-						type="radio"
-						value="metric"
-					/>
-					<Input
-						id="imperial"
-						v-model="selectedMeasurementSystem"
-						:selected="selectedMeasurementSystem === 'imperial'"
-						labelName="Imperial"
-						name="measurement"
-						type="radio"
-						value="imperial"
-					/>
+					<ClientOnly>
+						<Input
+							id="metric"
+							v-model="selectedMeasurementSystem"
+							:selected="selectedMeasurementSystem === 'metric'"
+							labelName="Metric"
+							name="measurement"
+							type="radio"
+							value="metric"
+						/>
+						<Input
+							id="imperial"
+							v-model="selectedMeasurementSystem"
+							:selected="selectedMeasurementSystem === 'imperial'"
+							labelName="Imperial"
+							name="measurement"
+							type="radio"
+							value="imperial"
+						/>
+					</ClientOnly>
 				</div>
 			</fieldset>
 			<fieldset class="bmi-form__fieldset">
@@ -198,76 +200,82 @@
 						v-if="selectedMeasurementSystem === 'metric'"
 						class="bmi-form__number-input-group bmi-form__number-input-group--type--metric"
 					>
-						<Input
-							id="height"
-							v-model="heightMetric"
-							description="cm"
-							labelFor="height"
-							labelName="Height"
-							name="height"
-							placeholder="0"
-							type="number"
-						/>
-						<Input
-							id="weight"
-							v-model="weightMetric"
-							description="kg"
-							labelFor="weight"
-							labelName="Weight"
-							name="weight"
-							placeholder="0"
-							type="number"
-						/>
+						<ClientOnly>
+							<Input
+								id="height"
+								v-model="heightMetric"
+								description="cm"
+								labelFor="height"
+								labelName="Height"
+								name="height"
+								placeholder="0"
+								type="number"
+							/>
+							<Input
+								id="weight"
+								v-model="weightMetric"
+								description="kg"
+								labelFor="weight"
+								labelName="Weight"
+								name="weight"
+								placeholder="0"
+								type="number"
+							/>
+						</ClientOnly>
 					</div>
 					<div
 						v-else-if="selectedMeasurementSystem === 'imperial'"
 						class="bmi-form__number-input-group bmi-form__number-input-group--type--imperial"
 					>
 						<div class="bmi-form__number-input-subgroup">
-							<Input
-								id="height"
-								v-model="heightImperialFt"
-								description="ft"
-								labelFor="height"
-								labelName="Height"
-								name="height"
-								placeholder="0"
-								type="number"
-							/>
-							<Input
-								id="height"
-								v-model="heightImperialIn"
-								:labelHidden="true"
-								description="in"
-								labelFor="height"
-								labelName="Height"
-								name="height"
-								placeholder="0"
-								type="number"
-							/>
+							<ClientOnly>
+								<Input
+									id="height"
+									v-model="heightImperialFt"
+									description="ft"
+									labelFor="height"
+									labelName="Height"
+									name="height"
+									placeholder="0"
+									type="number"
+								/>
+								<Input
+									id="height"
+									v-model="heightImperialIn"
+									:labelHidden="true"
+									description="in"
+									labelFor="height"
+									labelName="Height"
+									name="height"
+									placeholder="0"
+									type="number"
+								/>
+							</ClientOnly>
 						</div>
 						<div class="bmi-form__number-input-subgroup">
-							<Input
-								id="weight"
-								v-model="weightImperialSt"
-								description="st"
-								labelFor="weight"
-								labelName="Weight"
-								name="weight"
-								placeholder="0"
-								type="number"
-							/>
-							<Input
-								id="weight"
-								v-model="weightImperialLbs"
-								:labelHidden="true"
-								description="lbs"
-								labelFor="weight"
-								labelName="Weight"
-								name="weight"
-								placeholder="0"
-								type="number"
-							/>
+							<ClientOnly>
+								<Input
+									id="weight"
+									v-model="weightImperialSt"
+									description="st"
+									labelFor="weight"
+									labelName="Weight"
+									name="weight"
+									placeholder="0"
+									type="number"
+								/>
+								<Input
+									id="weight"
+									v-model="weightImperialLbs"
+									:labelHidden="true"
+									description="lbs"
+									labelFor="weight"
+									labelName="Weight"
+									name="weight"
+									placeholder="0"
+									type="number"
+								/>
+							</ClientOnly>
 						</div>
 					</div>
 				</Transition>

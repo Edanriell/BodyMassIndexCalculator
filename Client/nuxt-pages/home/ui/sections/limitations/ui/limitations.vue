@@ -46,9 +46,9 @@
 				certain cases, the measurement may not be beneficial to use.
 			</p>
 			<NuxtImg
+				:preload="false"
 				class="limitations-section__content-decorative-image"
 				height="auto"
-				preload
 				src="/images/vector/line-reversed.svg"
 				width="auto"
 			/>
@@ -56,7 +56,9 @@
 		<ul class="limitations-sections__limits-list limits-list">
 			<li v-for="{ iconType, title, text } in limitations" class="limits-list__item">
 				<header class="limits-list__header">
-					<Icon :type="iconType" />
+					<ClientOnly>
+						<Icon :type="iconType" />
+					</ClientOnly>
 					<h3 class="limits-list__title">{{ title }}</h3>
 				</header>
 				<p class="limits-list__text">

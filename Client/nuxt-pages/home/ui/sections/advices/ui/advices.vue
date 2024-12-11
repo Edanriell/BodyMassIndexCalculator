@@ -44,7 +44,9 @@
 						iconWrapperColor
 					"
 				>
-					<Icon :type="iconType" />
+					<ClientOnly>
+						<Icon :type="iconType" />
+					</ClientOnly>
 				</div>
 				<div class="advices-list__item-content">
 					<h3 class="advices-list__title">{{ title }}</h3>

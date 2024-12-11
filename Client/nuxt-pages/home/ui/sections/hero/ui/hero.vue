@@ -14,9 +14,9 @@
 		</div>
 		<BmiCalculator />
 		<NuxtImg
+			:preload="false"
 			class="hero-section__line-image"
 			height="auto"
-			preload
 			src="/images/vector/line.svg"
 			width="auto"
 		/>

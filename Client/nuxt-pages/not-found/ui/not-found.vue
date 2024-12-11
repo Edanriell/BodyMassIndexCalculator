@@ -6,9 +6,11 @@
 	<section class="not-found-section">
 		<h1 class="not-found-section__title">404</h1>
 		<p class="not-found-section__text">Sorry, the page you are looking for does not exist.</p>
-		<Link href="/" target="_self">
-			<span class="button__text">Go Back to Home</span>
-		</Link>
+		<ClientOnly>
+			<Link href="/" nuxt-client target="_self">
+				<span class="button__text">Go Back to Home</span>
+			</Link>
+		</ClientOnly>
 	</section>
 </template>
 

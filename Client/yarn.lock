@@ -2115,7 +2115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:^5.2.0":
+"@vitejs/plugin-vue@npm:^5.2.0, @vitejs/plugin-vue@npm:^5.2.1":
   version: 5.2.1
   resolution: "@vitejs/plugin-vue@npm:5.2.1"
   peerDependencies:
@@ -2985,6 +2985,23 @@ __metadata:
   checksum: 10c0/f02a7e9db8a7612a96d98434f08071e7cf1ab885ed599213545d83f25891ca5a9917f0c74d1201f0a39f7704677a4f6adf2ab73789b5b114c1b08c09e82b235d
   languageName: node
   linkType: hard
+
+"client@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "client@workspace:."
+  dependencies:
+    "@nuxt/eslint": "npm:^0.7.2"
+    "@nuxt/image": "npm:^1.8.1"
+    "@vitejs/plugin-vue": "npm:^5.2.1"
+    less: "npm:^4.2.1"
+    motion: "npm:^11.12.0"
+    nuxt: "npm:^3.14.1592"
+    prettier: "npm:^3.4.1"
+    sanitize.css: "npm:^13.0.0"
+    vue: "npm:latest"
+    vue-router: "npm:latest"
+  languageName: unknown
+  linkType: soft
 
 "clipboardy@npm:^4.0.0":
   version: 4.0.0
@@ -6371,22 +6388,6 @@ __metadata:
   checksum: 10c0/fa5d78f06f10ab55677f0089347c806108fd04ff05612c874951d174adfbcb3c07c7c079384c356975f60ce27851bdb4fb2e27de019f34c3444333841f41717a
   languageName: node
   linkType: hard
-
-"nuxt-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "nuxt-app@workspace:."
-  dependencies:
-    "@nuxt/eslint": "npm:^0.7.2"
-    "@nuxt/image": "npm:^1.8.1"
-    less: "npm:^4.2.1"
-    motion: "npm:^11.12.0"
-    nuxt: "npm:^3.14.1592"
-    prettier: "npm:^3.4.1"
-    sanitize.css: "npm:^13.0.0"
-    vue: "npm:latest"
-    vue-router: "npm:latest"
-  languageName: unknown
-  linkType: soft
 
 "nuxt@npm:^3.14.1592":
   version: 3.14.1592
