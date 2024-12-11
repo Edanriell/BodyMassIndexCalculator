@@ -13,6 +13,8 @@
 		selected?: boolean;
 		description?: string;
 		placeholder?: string;
+		min?: number;
+		max?: number;
 	};
 
 	const {
@@ -25,7 +27,9 @@
 		selected,
 		description,
 		placeholder,
-		labelHidden
+		labelHidden,
+		min = 1,
+		max = 100
 	} = defineProps<InputProps>();
 
 	const model = defineModel<string | number | null>();
@@ -68,7 +72,15 @@
 	};
 
 	const handleNumberInputChange = (event: Event) => {
-		model.value = Number((event.target as HTMLInputElement).value);
+		let inputValue = Number((event.target as HTMLInputElement).value);
+
+		if (inputValue < min) {
+			inputValue = min;
+		} else if (inputValue > max) {
+			inputValue = max;
+		}
+
+		model.value = inputValue;
 	};
 
 	const handleMouseEnter = (element: HTMLElement | null) => {

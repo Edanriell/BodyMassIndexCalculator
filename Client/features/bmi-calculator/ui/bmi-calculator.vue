@@ -204,6 +204,8 @@
 							<Input
 								id="height"
 								v-model="heightMetric"
+								:max="250"
+								:min="1"
 								description="cm"
 								labelFor="height"
 								labelName="Height"
@@ -214,6 +216,8 @@
 							<Input
 								id="weight"
 								v-model="weightMetric"
+								:max="500"
+								:min="1"
 								description="kg"
 								labelFor="weight"
 								labelName="Weight"
@@ -232,6 +236,8 @@
 								<Input
 									id="height"
 									v-model="heightImperialFt"
+									:max="8"
+									:min="1"
 									description="ft"
 									labelFor="height"
 									labelName="Height"
@@ -243,6 +249,8 @@
 									id="height"
 									v-model="heightImperialIn"
 									:labelHidden="true"
+									:max="96"
+									:min="0"
 									description="in"
 									labelFor="height"
 									labelName="Height"
@@ -257,6 +265,8 @@
 								<Input
 									id="weight"
 									v-model="weightImperialSt"
+									:max="30"
+									:min="1"
 									description="st"
 									labelFor="weight"
 									labelName="Weight"
@@ -268,6 +278,8 @@
 									id="weight"
 									v-model="weightImperialLbs"
 									:labelHidden="true"
+									:max="600"
+									:min="0"
 									description="lbs"
 									labelFor="weight"
 									labelName="Weight"
